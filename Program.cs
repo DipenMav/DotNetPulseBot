@@ -8,11 +8,20 @@ using Telegram.Bot;
 
 class Program
 {
-    private static readonly string botToken = "8206028548:AAFxsMT7epDdg2Y4B2ia-na9utdJ6FEMi4c"; // Your bot token
-    private static readonly string channelUsername = "@dotnetdrops"; // Your public Telegram channel
+    //private static readonly string botToken = "8206028548:AAFxsMT7epDdg2Y4B2ia-na9utdJ6FEMi4c"; // Your bot token
+    //private static readonly string channelUsername = "@dotnetdrops"; // Your public Telegram channel
+
+    private static readonly string botToken = Environment.GetEnvironmentVariable("TELEGRAM_TOKEN");
+    private static readonly string channelUsername = Environment.GetEnvironmentVariable("CHANNEL_USERNAME");
 
     static async Task Main(string[] args)
     {
+        if(string.IsNullOrEmpty(botToken) || string.IsNullOrEmpty(channelUsername))
+        {
+            Console.WriteLine("Environment Variable not set: Telegram_Token or channel_username");
+            return;
+        }
+
         var botClient = new TelegramBotClient(botToken);
 
         string feedUrl = "https://devblogs.microsoft.com/dotnet/feed/";
@@ -38,7 +47,7 @@ class Program
                 );
             }
 
-            Console.WriteLine("✅ Successfully posted to @dotnetdrops!");
+            Console.WriteLine("✅ Successfully posted to your channel!");
         }
     }
 

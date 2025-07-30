@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "DotNetPulseBot": {
+      "commandName": "Project"
+    },
+    "Docker": {
+      "commandName": "Docker"
+    }
+  }
+}
