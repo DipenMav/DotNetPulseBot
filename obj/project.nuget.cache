@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "9mS3qq1gng6OKukfkPMiq22JjB2rIqnCAXJP28zEE6KoISAcP6DUE/taUKpU5ICVU1YUJdazvtpOK7jNDFnP6w==",
+  "dgSpecHash": "IjBEgsJH6sWyZ7P5vwJayyy6juh8H8emy7h0RaySxKKFgrbBx8alkn5C8Yd76RXjm5BYknJcptz+nb3gz3KXeQ==",
   "success": true,
-  "projectFilePath": "D:\\DotNetAgent\\DotNetPulsseBot\\DotNetPulsseBot.csproj",
+  "projectFilePath": "D:\\DotNetAgent\\DotNetPulseBot\\DotNetPulseBot.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\User\\.nuget\\packages\\newtonsoft.json\\12.0.2\\newtonsoft.json.12.0.2.nupkg.sha512",
     "C:\\Users\\User\\.nuget\\packages\\system.servicemodel.syndication\\9.0.7\\system.servicemodel.syndication.9.0.7.nupkg.sha512",
@@ -13,7 +13,7 @@
       "code": "NU1603",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "DotNetPulsseBot depends on Telegram.Bot (>= 17.0.1) but Telegram.Bot 17.0.1 was not found. An approximate best match of Telegram.Bot 18.0.0 was resolved.",
+      "message": "DotNetPulseBot depends on Telegram.Bot (>= 17.0.1) but Telegram.Bot 17.0.1 was not found. An approximate best match of Telegram.Bot 18.0.0 was resolved.",
       "libraryId": "Telegram.Bot",
       "targetGraphs": [
         "net6.0"

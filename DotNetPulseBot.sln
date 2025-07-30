@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32228.430
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetPulsseBot", "DotNetPulsseBot.csproj", "{060C33EB-1368-495C-9BAD-486B145F7478}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetPulseBot", "DotNetPulseBot.csproj", "{060C33EB-1368-495C-9BAD-486B145F7478}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

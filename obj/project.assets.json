@@ -127,11 +127,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\DotNetAgent\\DotNetPulsseBot\\DotNetPulsseBot.csproj",
-      "projectName": "DotNetPulsseBot",
-      "projectPath": "D:\\DotNetAgent\\DotNetPulsseBot\\DotNetPulsseBot.csproj",
+      "projectUniqueName": "D:\\DotNetAgent\\DotNetPulseBot\\DotNetPulseBot.csproj",
+      "projectName": "DotNetPulseBot",
+      "projectPath": "D:\\DotNetAgent\\DotNetPulseBot\\DotNetPulseBot.csproj",
       "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-      "outputPath": "D:\\DotNetAgent\\DotNetPulsseBot\\obj\\",
+      "outputPath": "D:\\DotNetAgent\\DotNetPulseBot\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -193,7 +193,7 @@
       "code": "NU1603",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "DotNetPulsseBot depends on Telegram.Bot (>= 17.0.1) but Telegram.Bot 17.0.1 was not found. An approximate best match of Telegram.Bot 18.0.0 was resolved.",
+      "message": "DotNetPulseBot depends on Telegram.Bot (>= 17.0.1) but Telegram.Bot 17.0.1 was not found. An approximate best match of Telegram.Bot 18.0.0 was resolved.",
       "libraryId": "Telegram.Bot",
       "targetGraphs": [
         "net6.0"
