@@ -14,8 +14,8 @@ class Program
 {
     //private static readonly string botToken = "8206028548:AAFxsMT7epDdg2Y4B2ia-na9utdJ6FEMi4c"; // Your bot token
     //private static readonly string channelUsername = "@dotnetdrops"; // Your public Telegram channel
-    static string? botToken = Environment.GetEnvironmentVariable("TELEGRAM_TOKEN"); // Your bot token
-    static string? channelUsername = Environment.GetEnvironmentVariable("CHANNEL_USERNAME"); // Your public Telegram channel
+    static string? botToken = Environment.GetEnvironmentVariable("TELEGRAM_TOKEN"); 
+    static string? channelUsername = Environment.GetEnvironmentVariable("CHANNEL_USERNAME"); 
     static string postedLinksFile = "posted_links.txt";
 
     static async Task Main(string[] args)
