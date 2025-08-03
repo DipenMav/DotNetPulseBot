@@ -1,0 +1,28 @@
+﻿name: Daily Bot Run
+
+on:
+  schedule:
+    - cron: '30 2 * * *'  # Runs at 2:30 AM UTC → 8:00 AM IST
+  workflow_dispatch:      # Allows manual trigger
+
+jobs:
+  run-bot:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 6.0.x  # or 8.0.x if your project uses .NET 8
+
+      - name: Install dependencies
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --configuration Release
+
+      - name: Run bot
+        run: dotnet run --project DotNetPulseBot/DotNetPulseBot.csproj

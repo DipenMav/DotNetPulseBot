@@ -44,9 +44,17 @@
               "target": "Package",
               "version": "[1.14.0, )"
             },
+            "Supabase.Postgrest": {
+              "target": "Package",
+              "version": "[4.1.0, )"
+            },
             "Telegram.Bot": {
               "target": "Package",
               "version": "[17.0.1, )"
+            },
+            "supabase": {
+              "target": "Package",
+              "version": "[1.1.1, )"
             },
             "system.servicemodel.syndication": {
               "target": "Package",
