@@ -25,4 +25,4 @@ jobs:
         run: dotnet build --configuration Release
 
       - name: Run bot
-        run: dotnet run --project DotNetPulseBot/DotNetPulseBot.csproj
+        run: dotnet run --project DotNetPulseBot.csproj
