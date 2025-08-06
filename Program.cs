@@ -15,8 +15,8 @@ class Program
 {
     public static string botToken = "8206028548:AAFxsMT7epDdg2Y4B2ia-na9utdJ6FEMi4c"; // Your bot token
     public static string channelUsername = "@dotnetdrops"; // Your public Telegram channel
-    // static string? botToken = Environment.GetEnvironmentVariable("TELEGRAM_TOKEN");
-    // static string? channelUsername = Environment.GetEnvironmentVariable("CHANNEL_USERNAME");
+                                                           // static string? botToken = Environment.GetEnvironmentVariable("TELEGRAM_TOKEN");
+                                                           // static string? channelUsername = Environment.GetEnvironmentVariable("CHANNEL_USERNAME");
     public static string supabaseUrl = "https://bzutdbajwcokhjkstqzg.supabase.co";
     public static string supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ6dXRkYmFqd2Nva2hqa3N0cXpnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM4Nzg4NzEsImV4cCI6MjA2OTQ1NDg3MX0.ggGv9x8cVsm9yLjsT24qG3JKPbHt9yNnpjZ1PMk0a5I";
     // Load from environment variables
@@ -40,29 +40,29 @@ class Program
         var botClient = new TelegramBotClient(botToken);
 
         List<string> feedUrls = new List<string>
-        {
-            "https://devblogs.microsoft.com/dotnet/feed/",
-            "https://devblogs.microsoft.com/dotnet/tag/ml-net/feed/",
-            "https://devblogs.microsoft.com/xamarin/feed/",
-            "https://devblogs.microsoft.com/aspnet/feed/",
-            "https://devblogs.microsoft.com/nuget/feed/",
-            //"https://azurecomcdn.azureedge.net/en-us/blog/feed/",
-            //"https://techcommunity.microsoft.com/gxcuf89792/rss/azure",
-            //"https://azure.microsoft.com/en-us/updates/feed/",
-            //"https://dev.to/feed/tag/dotnet",
-            "https://medium.com/feed/tag/dotnet",
-            "https://hnrss.org/newest?q=dotnet+azure+cloud+ml",
-            //"https://openai.com/feed.xml",
-            //"https://techcommunity.microsoft.com/gxcuf89792/rss/Microsoft-AI",
-            "https://github.blog/feed/",
-            //"https://feeds.feedburner.com/ScottHanselman", // Hanselman's blog
-            "https://weblog.west-wind.com/rss.aspx", // Rick Strahl (.NET MVP)
-            "https://www.thinktecture.com/feed/", // Thinktecture team blog
-            //"https://www.infoq.com/dotnet/rss", // .NET on InfoQ
-            "https://codeopinion.com/feed/" // Domain-driven design (.NET)
-        };
+    {
+        "https://devblogs.microsoft.com/dotnet/feed/",
+        "https://devblogs.microsoft.com/dotnet/tag/ml-net/feed/",
+        "https://devblogs.microsoft.com/xamarin/feed/",
+        "https://devblogs.microsoft.com/aspnet/feed/",
+        "https://devblogs.microsoft.com/nuget/feed/",  
+        //"https://azurecomcdn.azureedge.net/en-us/blog/feed/",  
+        //"https://techcommunity.microsoft.com/gxcuf89792/rss/azure",  
+        //"https://azure.microsoft.com/en-us/updates/feed/",  
+        //"https://dev.to/feed/tag/dotnet",  
+        "https://medium.com/feed/tag/dotnet",
+        "https://hnrss.org/newest?q=dotnet+azure+cloud+ml",  
+        //"https://openai.com/feed.xml",  
+        //"https://techcommunity.microsoft.com/gxcuf89792/rss/Microsoft-AI",  
+        "https://github.blog/feed/",  
+        //"https://feeds.feedburner.com/ScottHanselman", // Hanselman's blog  
+        "https://weblog.west-wind.com/rss.aspx", // Rick Strahl (.NET MVP)  
+        "https://www.thinktecture.com/feed/", // Thinktecture team blog  
+        //"https://www.infoq.com/dotnet/rss", // .NET on InfoQ  
+        "https://codeopinion.com/feed/" // Domain-driven design (.NET)  
+    };
 
-        // Fetch articles from the provided feed URLs
+        // Fetch articles from the provided feed URLs  
         var allNewArticles = new List<SyndicationItem>();
 
         foreach (var feedUrl in feedUrls)
@@ -82,7 +82,7 @@ class Program
             }
         }
 
-        // Step 1: Get posted URLs from Supabase
+        // Step 1: Get posted URLs from Supabase  
         var posted = await supabaseClient
             .From<PostedArticle>()
             .Get();
@@ -91,15 +91,15 @@ class Program
             .Select(x => x.Url.TrimEnd('/'))
             .ToHashSet(StringComparer.OrdinalIgnoreCase);
 
-        // Step 2: Filter and check duplicates
+        // Step 2: Filter and check duplicates  
         var newArticles = allNewArticles
             .Where(item =>
             {
                 var url = item.Links.FirstOrDefault()?.Uri.ToString().TrimEnd('/');
-                return url != null && !postedUrls.Contains(url) && item.PublishDate > DateTime.UtcNow.AddDays(-7); // Filter out articles older than 7 days
-            })
+                return url != null && !postedUrls.Contains(url) && item.PublishDate > DateTime.UtcNow.AddDays(-7); // Filter out articles older than 7 days  
+        })
             .OrderByDescending(item => item.PublishDate)
-            .Take(3) // Limit to 3 articles
+            .Take(3) // Limit to 3 articles  
             .ToList();
 
         if (newArticles.Count == 0)
@@ -108,7 +108,7 @@ class Program
             return;
         }
 
-        // Post new articles to Telegram and save them to Supabase
+        // Post new articles to Telegram and save them to Supabase  
         foreach (var item in newArticles)
         {
             string title = item.Title.Text;
@@ -131,24 +131,28 @@ class Program
                 PublishedAt = item.PublishDate.UtcDateTime
             };
 
-            try { 
-
-            await supabaseClient.From<PostedArticle>().Insert(article);
-            Console.WriteLine($"✅ Posted and saved: {title}");
+            try
+            {
+                // attempt to insert
+                await supabaseClient.From<PostedArticle>().Insert(article);
+                Console.WriteLine($"✅ Posted and saved: {title}");
             }
             catch (Supabase.Postgrest.Exceptions.PostgrestException ex)
-            when (ex.Message.Contains("duplicate key"))
+                when (ex.Message.Contains("duplicate key"))
             {
                 // skip duplicates without crashing
                 Console.WriteLine($"⚠️ Skipped duplicate URL: {link}");
             }
         }
-    }
-    }
+    }    
 
     static string StripHtml(string html) =>
         Regex.Replace(html, "<.*?>", string.Empty);
 
     static string EscapeHtml(string input) =>
         input.Replace("&", "&amp;").Replace("<", "&lt;").Replace(">", "&gt;");
+
 }
+
+
+
