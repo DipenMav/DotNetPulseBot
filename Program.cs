@@ -115,13 +115,7 @@ class Program
             string link = item.Links.First().Uri.ToString();
             string summary = StripHtml(item.Summary?.Text ?? "No summary available");
 
-            string message = $"📰 <b>{EscapeHtml(title)}</b>\n\n{EscapeHtml(summary)}\n\n🔗 <a href=\"{link}\">Read more</a>";
-
-            await botClient.SendTextMessageAsync(
-                chatId: channelUsername,
-                text: message,
-                parseMode: ParseMode.Html
-            );
+           
 
             var article = new PostedArticle
             {
@@ -135,6 +129,13 @@ class Program
             {
                 // attempt to insert
                 await supabaseClient.From<PostedArticle>().Insert(article);
+                string message = $"📰 <b>{EscapeHtml(title)}</b>\n\n{EscapeHtml(summary)}\n\n🔗 <a href=\"{link}\">Read more</a>";
+
+                await botClient.SendTextMessageAsync(
+                    chatId: channelUsername,
+                    text: message,
+                    parseMode: ParseMode.Html
+                );
                 Console.WriteLine($"✅ Posted and saved: {title}");
             }
             catch (Supabase.Postgrest.Exceptions.PostgrestException ex)
@@ -142,6 +143,10 @@ class Program
             {
                 // skip duplicates without crashing
                 Console.WriteLine($"⚠️ Skipped duplicate URL: {link}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"❌ Failed to post or save article: {title} | Error: {ex.Message}");
             }
         }
     }    
