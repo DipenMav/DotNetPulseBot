@@ -42,21 +42,24 @@ class Program
         List<string> feedUrls = new List<string>
         {
             "https://devblogs.microsoft.com/dotnet/feed/",
-            "https://devblogs.microsoft.com/dotnet/tag/ml-net/feed/", 
+            "https://devblogs.microsoft.com/dotnet/tag/ml-net/feed/",
             "https://devblogs.microsoft.com/xamarin/feed/",
-            "https://devblogs.microsoft.com/aspnet/feed/",    
+            "https://devblogs.microsoft.com/aspnet/feed/",
             "https://devblogs.microsoft.com/nuget/feed/",
-            // Replaced Azure blog feeds with reliable Microsoft ones
-            "https://techcommunity.microsoft.com/t5/azure/bg-p/Azure/rss", // Official Azure blog (working)
-            // Dev.to blocked bots – removed
-            // Medium tutorials – removed as per your earlier direction
-            "https://hnrss.org/newest?q=dotnet+azure+cloud+ml", // Hacker News search (still works)
-            // OpenAI blog blocks bots – removed
-            "https://github.blog/feed/", // GitHub official blog (working)
-            "https://feeds.feedburner.com/ScottHanselman", // Scott Hanselman (302 redirect okay, most readers can follow it)
-            "https://weblog.west-wind.com/rss.aspx", // Rick Strahl
-            "https://www.thinktecture.com/feed/", // Thinktecture team
-            "https://codeopinion.com/feed/", // Domain-driven design & .NET
+            //"https://azurecomcdn.azureedge.net/en-us/blog/feed/",
+            //"https://techcommunity.microsoft.com/gxcuf89792/rss/azure",
+            //"https://azure.microsoft.com/en-us/updates/feed/",
+            //"https://dev.to/feed/tag/dotnet",
+            "https://medium.com/feed/tag/dotnet",
+            "https://hnrss.org/newest?q=dotnet+azure+cloud+ml",
+            //"https://openai.com/feed.xml",
+            //"https://techcommunity.microsoft.com/gxcuf89792/rss/Microsoft-AI",
+            "https://github.blog/feed/",
+            //"https://feeds.feedburner.com/ScottHanselman", // Hanselman's blog
+            "https://weblog.west-wind.com/rss.aspx", // Rick Strahl (.NET MVP)
+            "https://www.thinktecture.com/feed/", // Thinktecture team blog
+            //"https://www.infoq.com/dotnet/rss", // .NET on InfoQ
+            "https://codeopinion.com/feed/" // Domain-driven design (.NET)
         };
 
         // Fetch articles from the provided feed URLs
@@ -128,9 +131,19 @@ class Program
                 PublishedAt = item.PublishDate.UtcDateTime
             };
 
+            try { 
+
             await supabaseClient.From<PostedArticle>().Insert(article);
             Console.WriteLine($"✅ Posted and saved: {title}");
+            }
+            catch (Supabase.Postgrest.Exceptions.PostgrestException ex)
+            when (ex.Message.Contains("duplicate key"))
+            {
+                // skip duplicates without crashing
+                Console.WriteLine($"⚠️ Skipped duplicate URL: {link}");
+            }
         }
+    }
     }
 
     static string StripHtml(string html) =>
