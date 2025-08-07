@@ -19,6 +19,11 @@ class Program
                                                            // static string? channelUsername = Environment.GetEnvironmentVariable("CHANNEL_USERNAME");
     public static string supabaseUrl = "https://bzutdbajwcokhjkstqzg.supabase.co";
     public static string supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ6dXRkYmFqd2Nva2hqa3N0cXpnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM4Nzg4NzEsImV4cCI6MjA2OTQ1NDg3MX0.ggGv9x8cVsm9yLjsT24qG3JKPbHt9yNnpjZ1PMk0a5I";
+    public static long notificationChatId = 624612918;
+    public static int successfullPosts = 0;
+    public static int failedPosts = 0;
+    public static int feedErrors = 0; // for internal tracking only
+
     // Load from environment variables
     //private static string botToken = Environment.GetEnvironmentVariable("TELEGRAM_TOKEN");
     //private static string channelUsername = Environment.GetEnvironmentVariable("CHANNEL_USERNAME");
@@ -79,6 +84,7 @@ class Program
             catch (Exception ex)
             {
                 Console.WriteLine($"❌ Error fetching feed {feedUrl}: {ex.Message}");
+                feedErrors++;
             }
         }
 
@@ -136,6 +142,7 @@ class Program
                     text: message,
                     parseMode: ParseMode.Html
                 );
+                successfullPosts++;
                 Console.WriteLine($"✅ Posted and saved: {title}");
             }
             catch (Supabase.Postgrest.Exceptions.PostgrestException ex)
@@ -147,8 +154,21 @@ class Program
             catch (Exception ex)
             {
                 Console.WriteLine($"❌ Failed to post or save article: {title} | Error: {ex.Message}");
+                failedPosts++;
             }
         }
+       // int postedCount = newArticles.Count;
+       // int failedCount = allNewArticles.Count - postedCount;
+
+        // Send summary message
+        string notification = $"✅ DotNetPulse Report – {DateTime.Now:hh:mm tt} IST\n" +
+                         $"📰 Articles Posted: {successfullPosts}\n" +
+                         $"⚠️ Failed Posts: {failedPosts}\n" +
+                         $"🕊️ No New Articles: {(newArticles.Count == 0 ? 1 : 0)}";
+
+        await botClient.SendTextMessageAsync(notificationChatId, notification);
+        Console.WriteLine("📬 Notification sent to admin.");
+
     }    
 
     static string StripHtml(string html) =>
