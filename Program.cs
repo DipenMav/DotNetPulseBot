@@ -157,11 +157,13 @@ class Program
                 failedPosts++;
             }
         }
-       // int postedCount = newArticles.Count;
-       // int failedCount = allNewArticles.Count - postedCount;
+        // int postedCount = newArticles.Count;
+        // int failedCount = allNewArticles.Count - postedCount;
 
         // Send summary message
-        string notification = $"✅ DotNetPulse Report – {DateTime.Now:hh:mm tt} IST\n" +
+        var istTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("India Standard Time"));
+
+        string notification = $"✅ DotNetPulse Report – {istTime:hh:mm tt} IST\n" +
                          $"📰 Articles Posted: {successfullPosts}\n" +
                          $"⚠️ Failed Posts: {failedPosts}\n" +
                          $"🕊️ No New Articles: {(newArticles.Count == 0 ? 1 : 0)}";
