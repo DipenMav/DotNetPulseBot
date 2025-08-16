@@ -25,4 +25,9 @@ jobs:
         run: dotnet build --configuration Release
 
       - name: Run bot
+        env:                               # 👇 Inject secrets securely
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+          NOTIFICATION_CHAT_ID: ${{ secrets.NOTIFICATION_CHAT_ID }}
         run: dotnet run --project DotNetPulseBot.csproj

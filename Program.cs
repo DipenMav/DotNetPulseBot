@@ -13,13 +13,13 @@ using System.Text.RegularExpressions;
 
 class Program
 {
-    public static string botToken = "8206028548:AAFxsMT7epDdg2Y4B2ia-na9utdJ6FEMi4c"; // Your bot token
-    public static string channelUsername = "@dotnetdrops"; // Your public Telegram channel
-                                                           // static string? botToken = Environment.GetEnvironmentVariable("TELEGRAM_TOKEN");
-                                                           // static string? channelUsername = Environment.GetEnvironmentVariable("CHANNEL_USERNAME");
-    public static string supabaseUrl = "https://bzutdbajwcokhjkstqzg.supabase.co";
-    public static string supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ6dXRkYmFqd2Nva2hqa3N0cXpnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM4Nzg4NzEsImV4cCI6MjA2OTQ1NDg3MX0.ggGv9x8cVsm9yLjsT24qG3JKPbHt9yNnpjZ1PMk0a5I";
-    public static long notificationChatId = 624612918;
+    // Read from GitHub Actions secrets (passed as env variables in YAML)
+    public static string? botToken = Environment.GetEnvironmentVariable("TELEGRAM_TOKEN");
+    public static string channelUsername = "@dotnetdrops"; // Safe to keep public
+
+    public static string? supabaseUrl = Environment.GetEnvironmentVariable("SUPABASE_URL");
+    public static string? supabaseKey = Environment.GetEnvironmentVariable("SUPABASE_KEY");
+    public static long notificationChatId = long.Parse(Environment.GetEnvironmentVariable("NOTIFICATION_CHAT_ID") ?? "0");
     public static int successfullPosts = 0;
     public static int failedPosts = 0;
     public static int feedErrors = 0; // for internal tracking only
